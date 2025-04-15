@@ -105,22 +105,32 @@ fn forward_propagate(
 	output
 }
 
-
+fn multiply(m: &DMatrix<f64>, n: &DMatrix<f64>) -> DMatrix<f64> {
+    // Verificación de dimensiones (opcional, pero recomendado)
+    assert_eq!(m.shape(), n.shape(), "Las matrices deben tener las mismas dimensiones");
+    
+    // Multiplicación elemento por elemento
+    m.component_mul(n)
+}
 fn dot(m: &DMatrix<f64>, n: &DMatrix<f64>) -> DMatrix<f64> {
-    let result = m*n;
-    result
+    // Verificación de dimensiones compatibles (opcional)
+    assert_eq!(
+        m.ncols(),
+        n.nrows(),
+        "El número de columnas de m debe coincidir con las filas de n"
+    );
+    
+    // Multiplicación de matrices
+    m * n // Equivalente a m.multiply(n)
 }
 fn subtract(m: &DMatrix<f64>, n: &DMatrix<f64>)->DMatrix<f64>{
-    let result=m-n;
-    result
+    m-n
 }
 fn add(m: &DMatrix<f64>, n: &DMatrix<f64>)->DMatrix<f64>{
-    let result=m+n;
-    result
+    m+n
 }
 fn scale(s: f64, m: &DMatrix<f64>)->DMatrix<f64>{
-    let result=s*m;
-    result
+    s*m
 }
 fn main() {
     let nnetconf = NeuralNetConfig {
